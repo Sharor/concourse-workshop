@@ -22,11 +22,13 @@ jobs:
         - -exc
         - |
            cd git-pr 
+           git config --global user.email "nobody@special.praqma"
+           git config --global user.name "praqma" && git add .     
            git branch -avv
            git fetch ../git master        
            git branch -avv   
            git rebase master
-           git log --all --simplify-by-decoration    
+           git log --all --simplify-by-decoration --graph --oneline          
     on_success:
       put: git-pr
       params:
