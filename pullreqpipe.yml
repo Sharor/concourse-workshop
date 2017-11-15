@@ -5,6 +5,8 @@ jobs:
   - get: git-pr
     trigger: true
     version: every
+  - get: git
+    trigger: true
   - task: build
     config:
       platform: linux
@@ -19,9 +21,12 @@ jobs:
         args:
         - -exc
         - |
-           cd git-pr && jekyll build
-           git config --global user.email "nobody@special.praqma"
-           git config --global user.name "praqma" && git add .           
+           cd git-pr 
+           git branch -avv
+           git fetch ../git master        
+           git branch -avv   
+           git rebase master
+           git log --all --simplify-by-decoration    
     on_success:
       put: git-pr
       params:
